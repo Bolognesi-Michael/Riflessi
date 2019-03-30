@@ -81,7 +81,9 @@ void riflesso(void){
     LCD.write("SEI PASSATO");
     LCD.setCursor(0,1);
     LCD.write(tempomedio/2);
+    digitalWrite(VERDE,HIGH);
     delay(2000);
+    digitalWrite(VERDE,LOW);
     LCD.clear();
   }
     if(tempomedio/2 > 200)
@@ -89,7 +91,9 @@ void riflesso(void){
     LCD.write("NON SEI PASSATO");
     LCD.setCursor(0,1);
     LCD.write(tempomedio/2);
+    digitalWrite(ROSSO,HIGH);
     delay(2000);
+    digitalWrite(ROSSO,LOW);
     LCD.clear();
   }
     if(tempomedio/2 < 150)
