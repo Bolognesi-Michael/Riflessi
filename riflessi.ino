@@ -99,7 +99,9 @@ void riflesso(void){
     if(tempomedio/2 < 150)
   {
     LCD.write("NOPE, BARATO");
+    digitalWrite(ROSSO,HIGH);
     delay(2000);
+    digitalWrite(ROSSO,LOW);
     LCD.clear();
   }
   
