@@ -22,6 +22,13 @@ void test(void){
 LCD.print("TEST RIFLESSI");
 delay(2000);
 LCD.clear();
+LCD.setCursor(0,0);
+LCD.print("OBIETTIVO");
+LCD.setCursor(0,1);
+LCD.print("125-200ms");
+delay(2000);
+LCD.setCursor(0,0);
+LCD.clear();
 LCD.print("premere il tasto");
 LCD.setCursor(0,1);
 LCD.print("per iniziare");
@@ -53,6 +60,8 @@ void led(void){
   LCD.write("IL TUO TEMPO");
   LCD.setCursor(0,1);
   LCD.print(tempoled);
+  LCD.setCursor(9,1);
+  LCD.print("ms");
   delay(2000);
   LCD.setCursor(0,0);
   LCD.clear();
@@ -80,17 +89,21 @@ void buzzer(void){
   LCD.write("IL TUO TEMPO");
   LCD.setCursor(0,1);
   LCD.print(tempobuzzer);
+  LCD.setCursor(9,1);
+  LCD.print("ms");
   delay(2000);
   LCD.setCursor(0,0);
   LCD.clear();
 }
 void riflesso(void){
-  if((tempoled+tempobuzzer)/2 < 200 && (tempoled+tempobuzzer)/2 >150)
+  if((tempoled+tempobuzzer)/2 < 200 && (tempoled+tempobuzzer)/2 >125)
   {
     LCD.write("SEI PASSATO");
     digitalWrite(VERDE,HIGH);
     LCD.setCursor(0,1);
     LCD.print((tempoled+tempobuzzer)/2);
+    LCD.setCursor(9,1);
+    LCD.print("ms");
     delay(5000);
     digitalWrite(VERDE,LOW);
     LCD.setCursor(0,0);
@@ -102,12 +115,14 @@ void riflesso(void){
     digitalWrite(ROSSO,HIGH);
     LCD.setCursor(0,1);
     LCD.print((tempoled+tempobuzzer)/2);
+    LCD.setCursor(9,1);
+    LCD.print("ms");
     delay(5000);
     digitalWrite(ROSSO,LOW);
     LCD.setCursor(0,0);
     LCD.clear();
   }
-   else if((tempoled+tempobuzzer)/2 < 150)
+   else if((tempoled+tempobuzzer)/2 < 125)
   {
     LCD.write("NOPE, BARATO");
     digitalWrite(ROSSO,HIGH);
