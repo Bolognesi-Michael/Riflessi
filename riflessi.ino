@@ -7,7 +7,7 @@ int ROSSO = 9;
 int TASTO = 13;
 int tempoled;
 int tempobuzzer;
-int tempomedio = tempoled + tempobuzzer;
+
 void setup() {
 pinMode(LED, OUTPUT);
 pinMode(BUZZER, OUTPUT);
@@ -15,6 +15,7 @@ pinMode(TASTO, INPUT);
 pinMode(ROSSO,OUTPUT);
 pinMode(VERDE,OUTPUT);
 LCD.begin(16,2);
+randomSeed(analogRead(0));
 }
 
 void test(void){
@@ -42,14 +43,18 @@ void led(void){
   LCD.print("1");
   delay(1000);
   LCD.clear();
+  delay(random(2000)); 
   int start = millis();
   digitalWrite(LED,HIGH);
   while(digitalRead (TASTO) == LOW){}
   digitalWrite(LED,LOW);
   int t = millis();
   tempoled = t-start;
+  LCD.write("IL TUO TEMPO");
+  LCD.setCursor(0,1);
   LCD.print(tempoled);
   delay(2000);
+  LCD.setCursor(0,0);
   LCD.clear();
 }
 void buzzer(void){
@@ -65,46 +70,52 @@ void buzzer(void){
   LCD.print("1");
   delay(1000);
   LCD.clear();
+  delay(random(2000));
   int startB = millis();
   tone(BUZZER,1000);
   while(digitalRead (TASTO) == LOW){}
   noTone(BUZZER);
   int tB = millis();
   tempobuzzer = tB-startB;
+  LCD.write("IL TUO TEMPO");
+  LCD.setCursor(0,1);
   LCD.print(tempobuzzer);
   delay(2000);
+  LCD.setCursor(0,0);
   LCD.clear();
 }
 void riflesso(void){
-  if(tempomedio/2 < 200 && tempomedio/2 >150)
+  if((tempoled+tempobuzzer)/2 < 200 && (tempoled+tempobuzzer)/2 >150)
   {
     LCD.write("SEI PASSATO");
-    LCD.setCursor(0,1);
-    LCD.write(tempomedio/2);
     digitalWrite(VERDE,HIGH);
-    delay(2000);
+    LCD.setCursor(0,1);
+    LCD.print((tempoled+tempobuzzer)/2);
+    delay(5000);
     digitalWrite(VERDE,LOW);
+    LCD.setCursor(0,0);
     LCD.clear();
   }
-    if(tempomedio/2 > 200)
+   else if((tempoled+tempobuzzer)/2 > 200)
   {
     LCD.write("NON SEI PASSATO");
-    LCD.setCursor(0,1);
-    LCD.write(tempomedio/2);
     digitalWrite(ROSSO,HIGH);
-    delay(2000);
+    LCD.setCursor(0,1);
+    LCD.print((tempoled+tempobuzzer)/2);
+    delay(5000);
     digitalWrite(ROSSO,LOW);
+    LCD.setCursor(0,0);
     LCD.clear();
   }
-    if(tempomedio/2 < 150)
+   else if((tempoled+tempobuzzer)/2 < 150)
   {
     LCD.write("NOPE, BARATO");
     digitalWrite(ROSSO,HIGH);
-    delay(2000);
+    delay(5000);
     digitalWrite(ROSSO,LOW);
     LCD.clear();
   }
-  
+
 }
 void loop() {
 test();
